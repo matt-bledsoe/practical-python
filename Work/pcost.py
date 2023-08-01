@@ -1,15 +1,16 @@
 # pcost.py
 #
 # Exercise 1.27
+import csv
 
 def portfolio_cost(filename):
     total_cost = 0.0
 
     f = open(filename, "rt")
-    headers = next(f)
+    rows = csv.reader(f)
+    headers = next(rows)
 
-    for line in f:
-        row = line.split(",")
+    for row in rows:
         try:
             shares = int(row[1])
         except ValueError:
