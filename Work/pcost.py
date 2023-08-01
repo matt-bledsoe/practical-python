@@ -10,7 +10,15 @@ def portfolio_cost(filename):
 
     for line in f:
         row = line.split(",")
-        row_cost = int(row[1]) * float(row[2])
+        try:
+            shares = int(row[1])
+        except ValueError:
+            print("Couldn't parse", line)
+        try:
+            price = float(row[2])
+        except ValueError:
+            print("Couldn't parse", line)
+        row_cost = shares * price
         total_cost += row_cost
 
     f.close()
