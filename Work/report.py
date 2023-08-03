@@ -39,6 +39,9 @@ portfolio = read_portfolio("Data/portfolio.csv")
 prices = read_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
 
+for name, shares, price, change in report:
+    print(f"{name:>10s} {shares:>10d} {price:10.2f} {change:>10.2f}")
+
 initial_value, current_value = 0.0, 0.0
 for holding in portfolio:
     initial_value += holding["shares"] * holding["price"]
