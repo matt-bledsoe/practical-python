@@ -26,8 +26,18 @@ def read_prices(filename):
                 print(f"Couldn't parse: {row}")
     return prices
 
+def make_report(portfolio, prices):
+    report = []
+    for holding in portfolio:
+        name = holding["name"]
+        current_price = prices[name]
+        line = (name, holding["shares"], current_price, current_price - holding["price"])
+        report.append(line)
+    return report
+
 portfolio = read_portfolio("Data/portfolio.csv")
 prices = read_prices("Data/prices.csv")
+report = make_report(portfolio, prices)
 
 initial_value, current_value = 0.0, 0.0
 for holding in portfolio:
