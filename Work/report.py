@@ -29,4 +29,11 @@ def read_prices(filename):
 portfolio = read_portfolio("Data/portfolio.csv")
 prices = read_prices("Data/prices.csv")
 
+initial_value, current_value = 0.0, 0.0
+for holding in portfolio:
+    initial_value += holding["shares"] * holding["price"]
+    current_value += holding["shares"] * prices[holding["name"]]
 
+print(f"The initial value of the portfolio was: {initial_value:,.2f}")
+print(f"The current value of the portfolio is: {current_value:,.2f}")
+print(f"The gain/loss is: {current_value - initial_value:,.2f}")
