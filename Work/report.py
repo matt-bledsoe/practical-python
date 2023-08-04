@@ -47,7 +47,7 @@ for h in headers:
 print(header_string)
 print(4 * ((10 * "-") + " "))
 for name, shares, price, change in report:
-    print(f"{name:>10s} {shares:>10d} {price:10.2f} {change:>10.2f}")
+    print(f"{name:>10s} {shares:>10d} ${price:9.2f} {change:>10.2f}")
 
 initial_value, current_value = 0.0, 0.0
 for holding in portfolio:
