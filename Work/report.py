@@ -10,7 +10,9 @@ def read_portfolio(filename):
 
         portfolio = []
         for row in rows:
-            holding = {"name": row[0], "shares": int(row[1]), "price": float(row[2])}
+            holding = dict(zip(headers, row))
+            holding["price"] = float(holding["price"])
+            holding["shares"] = int(holding["shares"])
             portfolio.append(holding)
     
     return portfolio
@@ -19,11 +21,11 @@ def read_prices(filename):
     with open(filename, "r") as f:
         rows = csv.reader(f)
         prices = {}
-        for row in rows:
+        for nrow, row in enumerate(rows, start=1):
             try:
                 prices[row[0]] = float(row[1])
             except IndexError:
-                print(f"Couldn't parse: {row}")
+                print(f"Row {nrow}. Couldn't parse: {row}")
     return prices
 
 def make_report(portfolio, prices):
@@ -35,7 +37,7 @@ def make_report(portfolio, prices):
         report.append(line)
     return report
 
-portfolio = read_portfolio("Data/portfolio.csv")
+portfolio = read_portfolio("Data/portfoliodate.csv")
 prices = read_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
 
