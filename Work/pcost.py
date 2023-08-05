@@ -7,23 +7,17 @@ import sys
 def portfolio_cost(filename):
     total_cost = 0.0
 
-    f = open(filename, "rt")
-    rows = csv.reader(f)
-    headers = next(rows)
+    with open(filename, "rt") as f:
+        rows = csv.reader(f)
+        headers = next(rows)
 
-    for row in rows:
-        try:
-            shares = int(row[1])
-        except ValueError:
-            print("Couldn't parse", line)
-        try:
-            price = float(row[2])
-        except ValueError:
-            print("Couldn't parse", line)
-        row_cost = shares * price
-        total_cost += row_cost
-
-    f.close()
+        for rowno, row in enumerate(rows, start=1):
+            try:
+                shares, price = int(row[1]), float(row[2])
+                row_cost = shares * price
+                total_cost += row_cost
+            except ValueError:
+                print(f"Row {rowno}. Couldn't parse", row)
     return(total_cost)
 
 if len(sys.argv) == 2:
