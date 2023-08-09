@@ -50,11 +50,16 @@ def print_report(report):
 
     return
 
-portfolio = read_portfolio("Data/portfoliodate.csv")
-prices = read_prices("Data/prices.csv")
-report = make_report(portfolio, prices)
-print_report(report)
+def portfolio_report(portfolio_filename, prices_filename):
 
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+    return
+
+portfolio_report("Data/portfoliodate.csv", "Data/prices.csv")
 # initial_value, current_value = 0.0, 0.0
 # for holding in portfolio:
 #     initial_value += holding["shares"] * holding["price"]
