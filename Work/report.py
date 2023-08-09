@@ -37,25 +37,29 @@ def make_report(portfolio, prices):
         report.append(line)
     return report
 
+def print_report(report):
+    headers = ("Name", "Shares", "Price", "Change")
+    header_string = ""
+    for h in headers:
+        header_string += f"{h:>10s} "
+
+    print(header_string)
+    print(4 * ((10 * "-") + " "))
+    for name, shares, price, change in report:
+        print(f"{name:>10s} {shares:>10d} ${price:9.2f} {change:>10.2f}")
+
+    return
+
 portfolio = read_portfolio("Data/portfoliodate.csv")
 prices = read_prices("Data/prices.csv")
 report = make_report(portfolio, prices)
+print_report(report)
 
-headers = ("Name", "Shares", "Price", "Change")
-header_string = ""
-for h in headers:
-    header_string += f"{h:>10s} "
+# initial_value, current_value = 0.0, 0.0
+# for holding in portfolio:
+#     initial_value += holding["shares"] * holding["price"]
+#     current_value += holding["shares"] * prices[holding["name"]]
 
-print(header_string)
-print(4 * ((10 * "-") + " "))
-for name, shares, price, change in report:
-    print(f"{name:>10s} {shares:>10d} ${price:9.2f} {change:>10.2f}")
-
-initial_value, current_value = 0.0, 0.0
-for holding in portfolio:
-    initial_value += holding["shares"] * holding["price"]
-    current_value += holding["shares"] * prices[holding["name"]]
-
-print(f"The initial value of the portfolio was: {initial_value:,.2f}")
-print(f"The current value of the portfolio is: {current_value:,.2f}")
-print(f"The gain/loss is: {current_value - initial_value:,.2f}")
+# print(f"The initial value of the portfolio was: {initial_value:,.2f}")
+# print(f"The current value of the portfolio is: {current_value:,.2f}")
+# print(f"The gain/loss is: {current_value - initial_value:,.2f}")
