@@ -23,27 +23,23 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=","
                 headers = select
             else:
                 indices = []
+        
+        records = []
+        for row in rows:
+            if not row: # Skip rows with no data
+                continue
+            # Select correct elements
+            if select:
+                row = [row[index] for index in indices]
+            # Type conversion
+            if types:
+                row = [func(val) for func, val in zip(types, row)]
             
-            records = []
-            for row in rows:
-                if not row: # Skip rows with no data
-                    continue
-
-                # Select correct elements
-                if select:
-                    row = [row[index] for index in indices]
-                
-                # Type conversion
-                if types:
-                    row = [func(val) for func, val in zip(types, row)]
+            # If there are headers create a dict, else make a tuple
+            if has_headers:
                 record = dict(zip(headers, row))
-                records.append(record)
-        else:
-            records = []
-            for row in rows:
-                if types:
-                    row = [func(val) for func, val in zip(types, row)]
-                records.append(tuple(row))
-
+            else:
+                record = tuple(row)
+            records.append(record)
     
     return records
