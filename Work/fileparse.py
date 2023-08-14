@@ -25,7 +25,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=","
                 indices = []
         
         records = []
-        for row in rows:
+        for nrow, row in enumerate(rows, 1):
             if not row: # Skip rows with no data
                 continue
             # Select correct elements
@@ -33,7 +33,11 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=","
                 row = [row[index] for index in indices]
             # Type conversion
             if types:
-                row = [func(val) for func, val in zip(types, row)]
+                try:
+                    row = [func(val) for func, val in zip(types, row)]
+                except ValueError as e:
+                    print(f"Row {nrow}: Couldn't convert {row}")
+                    print(f"Row {nrow}: {e}")
             
             # If there are headers create a dict, else make a tuple
             if has_headers:
