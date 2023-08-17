@@ -46,7 +46,12 @@ def portfolio_report(portfolio_filename, prices_filename):
 
     return
 
-portfolio_report("Data/portfolio.csv", "Data/prices.csv")
+def main(argv):
+    portfolio_report(argv[1], argv[2])
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)
 # initial_value, current_value = 0.0, 0.0
 # for holding in portfolio:
 #     initial_value += holding["shares"] * holding["price"]
