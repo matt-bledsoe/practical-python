@@ -8,7 +8,7 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=","
     Parse a csv file into a list of records 
     '''
     # Can't select without headers
-    if select and ~has_headers:
+    if select and not has_headers:
         raise RuntimeError("Cannot select columns without headers")
     
     with open(filename) as f:
