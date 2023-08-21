@@ -14,16 +14,12 @@ def parse_csv(file, select=None, types=None, has_headers=True, delimiter=",",
     
     rows = csv.reader(file, delimiter=delimiter)
         
-    if has_headers:
-        # Read the headers
-        headers = next(rows)
-
-        if select:
-            indices = [headers.index(colname) for colname in select]
-            headers = select
-        else:
-            indices = []
+    headers = next(rows) if has_headers else []
     
+    if select:
+        indices = [headers.index(colname) for colname in select]
+        headers = select
+
     records = []
     for nrow, row in enumerate(rows, 1):
         if not row: # Skip rows with no data
