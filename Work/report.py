@@ -3,6 +3,7 @@
 # Exercise 2.4
 import fileparse
 import stock
+import tableformat
 
 def read_portfolio(filename):
     with open(filename, "rt") as file:
@@ -27,17 +28,15 @@ def make_report(portfolio, prices):
         report.append(line)
     return report
 
-def print_report(report):
-    headers = ("Name", "Shares", "Price", "Change")
-    header_string = ""
-    for h in headers:
-        header_string += f"{h:>10s} "
-
-    print(header_string)
-    print(4 * ((10 * "-") + " "))
+def print_report(report, formatter):
+    """
+    Print a nicely formatted table from a list of (name, shares, price, change)
+    tuples
+    """
+    formatter.headings(["Name", "Shares", "Price", "Change"])
     for name, shares, price, change in report:
-        print(f"{name:>10s} {shares:>10d} ${price:9.2f} {change:>10.2f}")
-
+        rowdata = [name, str(shares), f"{price:0.2f}", f"{change:0.2f}"]
+        formatter.row(rowdata)
     return
 
 def portfolio_report(portfolio_filename, prices_filename):
@@ -45,7 +44,8 @@ def portfolio_report(portfolio_filename, prices_filename):
     portfolio = read_portfolio(portfolio_filename)
     prices = read_prices(prices_filename)
     report = make_report(portfolio, prices)
-    print_report(report)
+    formatter = tableformat.TableFormatter()
+    print_report(report, formatter)
 
     return
 
