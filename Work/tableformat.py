@@ -50,3 +50,16 @@ class HTMLTableFormatter(TableFormatter):
     def row(self, rowdata):
         tagged_row = "</td><td>".join(rowdata)
         print("<tr><td>" + tagged_row + "</td></tr>")
+
+def create_formatter(fmt):
+    """
+    Create a formatter based on a selected format
+    """
+    if fmt == "txt":
+        return TextTableFormatter()
+    elif fmt == "csv":
+        return CSVTableFormatter()
+    elif fmt == "html":
+        return HTMLTableFormatter()
+    else:
+        raise RuntimeError(f"Unknown format {fmt}")
