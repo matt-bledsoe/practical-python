@@ -51,6 +51,9 @@ class HTMLTableFormatter(TableFormatter):
         tagged_row = "</td><td>".join(rowdata)
         print("<tr><td>" + tagged_row + "</td></tr>")
 
+class FormatError(Exception):
+    pass
+
 def create_formatter(fmt):
     """
     Create a formatter based on a selected format
@@ -62,7 +65,7 @@ def create_formatter(fmt):
     elif fmt == "html":
         return HTMLTableFormatter()
     else:
-        raise RuntimeError(f"Unknown format {fmt}")
+        raise FormatError(f"Unknown format {fmt}")
 
 def print_table(objects, attributes, formatter):
     """
