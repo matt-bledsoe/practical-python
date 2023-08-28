@@ -63,3 +63,14 @@ def create_formatter(fmt):
         return HTMLTableFormatter()
     else:
         raise RuntimeError(f"Unknown format {fmt}")
+
+def print_table(objects, attributes, formatter):
+    """
+    Print a table of attributes from a list of objects
+    """
+    formatter.headings(attributes) 
+    for object in objects:
+        rowdata = [str(getattr(object, a)) for a in attributes]
+        formatter.row(rowdata)
+
+
