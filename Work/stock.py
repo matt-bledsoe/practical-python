@@ -8,6 +8,8 @@ class Stock:
     
     def __repr__(self) -> str:
         return f"Stock:('{self.name}', {self.shares}, {self.price})"
+    
+    @property
     def cost(self):
         return self.shares * self.price
     
