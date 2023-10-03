@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # stocksim.py
 #
 # Stock market simulator.  This simulator creates stock market
