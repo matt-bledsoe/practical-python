@@ -22,15 +22,15 @@ def filter_symbols(rows, names):
 
 def parse_stock_data(lines):
     rows = csv.reader(lines)
-    rows = select_columns(rows, [0, 1, 4])
-    rows = convert_types(rows, [str, float, float])
-    rows = make_dicts(rows, ["name", "price", "change"])
+    rows = ([row[index] for index in [0, 1, 4]] for row in rows)
+    rows = ([func(val) for func, val in zip([str, float, float], row)] for row in rows)
+    rows = (dict(zip(["name", "price", "change"], row)) for row in rows)
     return rows
 
 def ticker(portfile, logfile, fmt):
     portfolio = report.read_portfolio(portfile) 
     rows = parse_stock_data(follow(logfile))
-    rows = filter_symbols(rows, portfolio)
+    rows = (row for row in rows if row['name'] in portfolio)
     table_format = tableformat.create_formatter(fmt)
     table_format.headings(["Name", "Price", "Change"])
     for row in rows:
