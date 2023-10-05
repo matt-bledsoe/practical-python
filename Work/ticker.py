@@ -1,5 +1,6 @@
 from follow import follow
 import report
+import tableformat
 import csv
 
 def convert_types(rows, types):
@@ -25,11 +26,20 @@ def parse_stock_data(lines):
     rows = convert_types(rows, [str, float, float])
     rows = make_dicts(rows, ["name", "price", "change"])
     return rows
- 
 
-if __name__ == "__main__":
-    portfolio = report.read_portfolio("Data/portfolio.csv") 
-    rows = parse_stock_data(follow("Data/stocklog.csv"))
+def ticker(portfile, logfile, fmt):
+    portfolio = report.read_portfolio(portfile) 
+    rows = parse_stock_data(follow(logfile))
     rows = filter_symbols(rows, portfolio)
+    table_format = tableformat.create_formatter(fmt)
+    table_format.headings(["Name", "Price", "Change"])
     for row in rows:
-        print(row)
+        table_format.row([f"{row['name']}", f"{row['price']}", 
+                          f"{row['change']}"])
+
+def main(argv):
+    ticker(argv[1], argv[2], argv[3])
+
+# if __name__ == "__main__":
+    # import sys
+    # main(sys.argv)
